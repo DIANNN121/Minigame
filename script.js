@@ -1,4 +1,4 @@
-const card = [
+const cards = [
     '🐶', '🐶',
     '🐱', '🐱', 
     '🐭', '🐭', 
@@ -11,17 +11,17 @@ const card = [
 
 let firstCard = null;
 let secondCard = null;
-let thirdCard = false;
+let lockBoard = false;
 
 function shuffle(array) {
-    for (let i = aray.length - 1; i > 0; i--) {
-        const.j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array [j], array[i]];
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
 }
 
 function createBoard() {
-    const gameBoard = document.querySelector('.game-board');
+    const gameBoard = document.querySelector('.game.board');
     shuffle(cards);
     cards.forEach(card => {
         const cardElement = document.createElement('div'); 
@@ -36,11 +36,11 @@ function flipCard() {
     if (lockBoard) return;
     if (this === firstCard) return;
 
-    this.clasList.add('flipped');
+    this.classList.add('flipped');
     this.textContent = this.dataset.icon;
 
     if (!firstCard) {
-        fisrtCard = this;
+        firstCard = this;
         return;
     }
 
@@ -58,21 +58,18 @@ function checkForMatch() {
 
 function disableCard() {
     firstCard.removeEventListener('click', flipCard);
-
     secondCard.removeEventListener('click', flipCard);
-        resetBoard();
+    resetBoard();
 }
 
 function unflippedCards() {
     lockBoard = true;
     setTimeout(() => {
-
-        firstCard.clasList.remove('flipped');
-
+        firstCard.classList.remove('flipped');
         secondCard.classList.remove('flipped');
-            firstCard.textContent = '';
-            secondCard.textContent = '';
-            resetBoard();
+        firstCard.textContent = '';
+        secondCard.textContent = '';
+        resetBoard();
     }, 1000);
 }
 
@@ -81,8 +78,8 @@ function resetBoard() {
 }
 
 document.getElementById('reset-button').addEventListener('click', () => {
-    document.querySelector('.game-board').innerHTML = '';
-    creatorBoard();
+    document.querySelector('.game.board').innerHTML = '';
+    createBoard();
 });
 
-creatorBoard();
+createBoard();
