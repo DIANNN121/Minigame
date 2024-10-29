@@ -21,7 +21,7 @@ function shuffle(array) {
 }
 
 function createBoard() {
-    const gameBoard = document.querySelector('.game.board');
+    const gameBoard = document.querySelector('.game-board');
     shuffle(cards);
     cards.forEach(card => {
         const cardElement = document.createElement('div'); 
@@ -50,19 +50,19 @@ function flipCard() {
 
 function checkForMatch() {
     if (firstCard.dataset.icon === secondCard.dataset.icon) {
-        disableCard();
+        disableCards();
     } else {
-        unflippedCards();
+        unflipCards();
     }
 }
 
-function disableCard() {
+function disableCards() {
     firstCard.removeEventListener('click', flipCard);
     secondCard.removeEventListener('click', flipCard);
     resetBoard();
 }
 
-function unflippedCards() {
+function unflipCards() {
     lockBoard = true;
     setTimeout(() => {
         firstCard.classList.remove('flipped');
@@ -78,7 +78,9 @@ function resetBoard() {
 }
 
 document.getElementById('reset-button').addEventListener('click', () => {
-    document.querySelector('.game.board').innerHTML = '';
+    const gameBoard = document.querySelector('.game-board');
+    gameBoard.innerHTML = '';
+    resetBoard();
     createBoard();
 });
 
